@@ -29,9 +29,19 @@ module.exports = function(io) {
       if (sessionId in sessionPool) {
         sessionPool[sessionId]['cachedChangeEvents'].push(["change", delta, Date.now()]);
       }
-
       forwardEvents(socket.id, sessionId, 'change', delta);
     });
+
+    // handle cursor move Event from Client.
+    socket.on("cursorMove", cursor => {
+      console.log(`cursorMove from client: ${socket.id} ${cursor}`);
+      cursor = JSON.parse(cursor);
+      // add attribute to mark the owner of cursor.
+      cursor['socketId'] = socket.id;
+
+      forwardEvents(socket.id, sessionId, 'cursorMove', JSON.stringify(cursor));
+    });
+
   });
 
   function forwardEvents(socketId, sessionId, eventName, data) {
