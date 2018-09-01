@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 declare var ace: any;
 
@@ -10,17 +11,21 @@ declare var ace: any;
 export class EditorComponent implements OnInit {
 
   editor: any;
-  sessionId: string = "123456";
+  sessionId: string = "";
 
   defaultContent = `public class Example {
     public static void main(String[] args) {
         // Type your Java code here
     }
 }`
-
-  constructor(@Inject('collaboration') private collaboration) { }
+  constructor(
+    @Inject('collaboration') private collaboration,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    const sessionId = this.route.snapshot.paramMap.get('sessionId');
+    this.sessionId = sessionId;
     this.initEditor();
   }
 

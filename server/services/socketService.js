@@ -95,6 +95,7 @@ module.exports = function(io) {
 
   });
 
+  // forward a operation to client.
   function forwardEvents(socketId, sessionId, eventName, data) {
     if (sessionId in sessionPool) {
       let participants = sessionPool[sessionId]['participants'];

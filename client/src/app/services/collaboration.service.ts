@@ -17,7 +17,7 @@ export class CollaborationService {
   constructor() { }
 
   init(editor: any, sessionId: string): void {
-    this.collaborationSocket = io(window.location.origin, { query: 'sessionId=123'});
+    this.collaborationSocket = io(window.location.origin, { query: `sessionId=${sessionId}`});
     
     // handle change Event from server.
     this.collaborationSocket.on("change", (delta: string) => {
