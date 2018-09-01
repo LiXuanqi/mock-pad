@@ -16,7 +16,8 @@ module.exports = function(io) {
       sessionPool[sessionId]['participants'].push(socket.id);
     } else {
       // find in redis
-      redisClient.get(`sessionPath/${sessionId}`, data => {
+      redisClient.get(`${sessionPath}/${sessionId}`, data => {
+        console.log(data)
         if (data) {
           console.log("session terminated previously; pulling back from Redis");
           sessionPool[sessionId] = {
@@ -70,8 +71,9 @@ module.exports = function(io) {
           // no user in this session
           if (participants.length == 0) {
             console.log("last participant left. Storing in Redis.");
-            let key = sessionPath + "/" + sessionId;
+            let key = `${sessionPath}/${sessionId}`;
             let value = JSON.stringify(sessionPool[sessionId]['cachedChangeEvents']);
+            console.log(key);
             redisClient.set(key, value, redisClient.redisPrint);
             redisClient.expire(key, TIMEOUT_IN_SECONDS);
             delete sessionPool[sessionId];
