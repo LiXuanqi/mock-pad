@@ -11,7 +11,7 @@ export class EditorComponent implements OnInit {
 
   editor: any;
   sessionId: string = "123456";
-  
+
   defaultContent = `public class Example {
     public static void main(String[] args) {
         // Type your Java code here
@@ -21,24 +21,38 @@ export class EditorComponent implements OnInit {
   constructor(@Inject('collaboration') private collaboration) { }
 
   ngOnInit() {
+    this.initEditor();
+  }
+
+  private initEditor(): void {
     this.editor = ace.edit('editor');
     this.editor.setTheme('ace/theme/eclipse');
-    this.resetEditor();
     this.editor.session.setMode("ace/mode/javascript");
-    document.getElementsByTagName('textarea')[0].focus(); // focus on editor when enter the page.
+    this.resetEditor();
+
+    // focus on editor when enter the page.
+    document.getElementsByTagName('textarea')[0].focus();
     
     // init websocket
     this.collaboration.init(this.editor, this.sessionId);
+    this.editor.lastAppliedChange = null;
 
-    // code change.
+    // bind code change Event.
     this.editor.on('change', (e) => {
       console.log('editor changes: ' + JSON.stringify(e));
+      if (this.editor.lastAppliedChange != e) {
+        this.collaboration.change(JSON.stringify(e));
+      }
     });
-    // cursor change.
+
+    // bind cursor change Event.
     this.editor.getSession().getSelection().on("changeCursor", () => {
       let cursor = this.editor.getSession().getSelection().getCursor();
       console.log('cursor moves: ' + JSON.stringify(cursor));
+      this.collaboration.cursorMove(JSON.stringify(cursor));
     });
+
+    this.collaboration.restoreBuffer();
   }
 
   private resetEditor(): void {

@@ -22,7 +22,19 @@ export class CollaborationService {
       editor.lastAppliedChange = delta;
       editor.getSession().getDocument().applyDeltas([delta]);
     });
+  }
 
-    
+  // emit code change to server.
+  change(delta: string): void {
+      this.collaborationSocket.emit("change", delta);
+  }
+
+  // emit cursor change to server.
+  cursorMove(cursor: string): void {
+    this.collaborationSocket.emit("cursorMove", cursor);
+  }
+
+  restoreBuffer(): void {
+    this.collaborationSocket.emit("restoreBuffer");
   }
 }
