@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { HttpModule } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // components
 import { AppComponent } from './app.component';
@@ -11,6 +11,7 @@ import { CollaborationService } from "./services/collaboration.service";
 import { routing } from './app.routes';
 import { HomeComponent } from './components/home/home.component';
 import { CodepadComponent } from './components/codepad/codepad.component';
+import { DataService } from './services/data.service';
 
 @NgModule({
   declarations: [
@@ -22,11 +23,15 @@ import { CodepadComponent } from './components/codepad/codepad.component';
   imports: [
     BrowserModule,
     NgbModule,
+    HttpModule,
     routing
   ],
   providers: [{
     provide: "collaboration",
     useClass: CollaborationService
+  }, {
+    provide: "data",
+    useClass: DataService
   }],
   bootstrap: [AppComponent]
 })

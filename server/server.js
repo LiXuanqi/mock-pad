@@ -6,9 +6,13 @@ let path = require("path");
 let socketIo = require('socket.io');
 let io = socketIo();
 let socketService = require('./services/socketService')(io);
+
+// Routers
 let indexRouter = require("./routes/index");
+let executorRouter = require("./routes/executor");
 
 app.use("/", indexRouter);
+app.use("/api/v1", executorRouter);
 
 app.use(express.static(path.join(__dirname, '../public')));
 

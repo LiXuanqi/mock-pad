@@ -12,6 +12,8 @@ export class EditorComponent implements OnInit {
 
   editor: any;
   sessionId: string = "";
+  buildResult: string;
+  runResult: string;
 
   defaultContent = `public class Example {
     public static void main(String[] args) {
@@ -19,6 +21,7 @@ export class EditorComponent implements OnInit {
     }
 }`
   constructor(
+    @Inject('data') private data,
     @Inject('collaboration') private collaboration,
     private route: ActivatedRoute
   ) { }
@@ -58,6 +61,21 @@ export class EditorComponent implements OnInit {
     });
 
     this.collaboration.restoreBuffer();
+  }
+
+  submit(): void {
+    let userCode = this.editor.getValue();
+    let data = {
+      user_code: userCode,
+      lang: 'java'
+    }
+    this.data.buildAndRun(data)
+      .then((res) => {
+        console.log(res);
+        this.buildResult = res.build;
+        this.runResult = res.run;
+      })
+    console.log(userCode);
   }
 
   private resetEditor(): void {

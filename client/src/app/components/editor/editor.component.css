@@ -2,3 +2,11 @@
   height: 600px;
   width: 100%;
 }
+.controllers {
+  margin-bottom: 16px;
+  margin-top: 16px;
+}
+
+.card {
+  margin-bottom: 8px;
+}
