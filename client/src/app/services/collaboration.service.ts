@@ -13,7 +13,7 @@ export class CollaborationService {
   constructor() { }
 
   init(editor: any, sessionId: string): void {
-    this.collaborationSocket = io(window.location.origin, { query: 'message=123'});
+    this.collaborationSocket = io(window.location.origin, { query: 'sessionId=123'});
     
     // code changes received from server.
     this.collaborationSocket.on("change", (delta: string) => {
