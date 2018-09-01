@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 
 declare var ace: any;
 
@@ -10,14 +10,15 @@ declare var ace: any;
 export class EditorComponent implements OnInit {
 
   editor: any;
-
+  sessionId: string = "123456";
+  
   defaultContent = `public class Example {
     public static void main(String[] args) {
         // Type your Java code here
     }
 }`
 
-  constructor() { }
+  constructor(@Inject('collaboration') private collaboration) { }
 
   ngOnInit() {
     this.editor = ace.edit('editor');
@@ -26,6 +27,9 @@ export class EditorComponent implements OnInit {
     this.editor.session.setMode("ace/mode/javascript");
     document.getElementsByTagName('textarea')[0].focus(); // focus on editor when enter the page.
     
+    // init websocket
+    this.collaboration.init(this.editor, this.sessionId);
+
     // code change.
     this.editor.on('change', (e) => {
       console.log('editor changes: ' + JSON.stringify(e));

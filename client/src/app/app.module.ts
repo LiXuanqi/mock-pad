@@ -6,6 +6,8 @@ import { EditorComponent } from './components/editor/editor.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { CollaborationService } from "./services/collaboration.service";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -15,7 +17,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserModule,
     NgbModule
   ],
-  providers: [],
+  providers: [{
+    provide: "collaboration",
+    useClass: CollaborationService
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
