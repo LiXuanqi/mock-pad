@@ -25,7 +25,11 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/ace-builds/src-min-noconflict/ace.js",
+              "./node_modules/ace-builds/src-min-noconflict/theme-eclipse.js",
+              "./node_modules/ace-builds/src-min-noconflict/mode-java.js"
+            ]
           },
           "configurations": {
             "production": {
