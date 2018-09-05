@@ -1,6 +1,7 @@
 #editor {
   height: 600px;
   width: 100%;
+  border-radius: 3px;
 }
 .controllers {
   margin-bottom: 16px;

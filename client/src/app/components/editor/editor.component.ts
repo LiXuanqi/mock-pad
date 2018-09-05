@@ -34,8 +34,9 @@ export class EditorComponent implements OnInit {
 
   private initEditor(): void {
     this.editor = ace.edit('editor');
-    this.editor.setTheme('ace/theme/eclipse');
-    this.editor.session.setMode("ace/mode/javascript");
+    this.editor.setTheme('ace/theme/xcode');
+    this.editor.session.setMode("ace/mode/java");
+    this.editor.setShowPrintMargin(false);
     this.resetEditor();
 
     // focus on editor when enter the page.
