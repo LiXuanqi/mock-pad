@@ -1,6 +1,8 @@
 var redis = require('redis');
 
-var client = redis.createClient();
+var client = redis.createClient({
+  host: "redis"
+});
 
 function set(key, value, callback) {
   client.set(key, value, function(err, res) {
