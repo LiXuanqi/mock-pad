@@ -1,6 +1,6 @@
 version: '3'
 services:
-  redis:
+  mockpad-redis:
     image: redis:5.0-rc4
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
@@ -9,8 +9,10 @@ services:
     networks: 
       - backend
     entrypoint: redis-server --appendonly yes
-  server:
-    build: ./
+  mockpad-server:
+    build: 
+      context: .
+      dockerfile: server.Dockerfile
     ports:
       - "3000:3000"
     networks: 
@@ -19,8 +21,13 @@ services:
       - ./client:/code/client
       - ./server:/code/server
     depends_on:
-      - redis
+      - mockpad-redis
     command: node /code/server/server.js
+  mockpad-executor:
+    build:
+      context: .
+      dockerfile: executor.Dockerfile
+    image: mockpad-executor
 networks: 
   backend:
     driver: bridge
