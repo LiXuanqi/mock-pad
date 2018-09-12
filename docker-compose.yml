@@ -9,8 +9,6 @@ services:
     networks: 
       - backend
     entrypoint: redis-server --appendonly yes
-    extra_hosts:
-      - "dockerhost:$DOCKERHOST"
   mockpad-server:
     build: 
       context: .
@@ -24,16 +22,12 @@ services:
       - ./server:/code/server
     depends_on:
       - mockpad-redis
-    command: node /code/server/server.js
-    extra_hosts:
-      - "dockerhost:$DOCKERHOST"
+    command: sh /docker-server-entrypoint.sh
   mockpad-executor:
     build:
       context: .
       dockerfile: executor.Dockerfile
     image: mockpad-executor
-    extra_hosts:
-      - "dockerhost:$DOCKERHOST"
 networks: 
   backend:
     driver: bridge
