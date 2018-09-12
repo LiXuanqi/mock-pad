@@ -9,4 +9,5 @@ fi
 
 # Here is the original entry point.
 cat /etc/hosts
+curl http://host.docker.internal:5000
 node /code/server/server.js
