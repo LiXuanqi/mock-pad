@@ -55,7 +55,7 @@ def build_and_run(code, lang):
         client.containers.run(
             image=IMAGE_NAME,
             command="%s %s" % (BUILD_COMMANDS[lang], SOURCE_FILE_NAMES[lang]),
-            volumes={source_file_host_dir: {'bind': source_file_guest_dir, 'mode': 'rw'}},
+            volumes={source_file_host_dir: {'bind': source_file_guest_dir, 'mode': 'rw', 'auto_remove': true}},
             working_dir=source_file_guest_dir
         )
         print "Source build."
@@ -70,7 +70,7 @@ def build_and_run(code, lang):
         log = client.containers.run(
             image=IMAGE_NAME,
             command="%s %s" % (EXECUTE_COMMANDS[lang], BINARY_NAMES[lang]),
-            volumes={source_file_host_dir: {'bind': source_file_guest_dir, 'mode': 'rw'}},
+            volumes={source_file_host_dir: {'bind': source_file_guest_dir, 'mode': 'rw', 'auto_remove': true}},
             working_dir=source_file_guest_dir
         )
         print "Executed."
