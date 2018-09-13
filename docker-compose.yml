@@ -9,6 +9,7 @@ services:
     networks: 
       - backend
     entrypoint: redis-server --appendonly yes
+    restart: always
   mockpad-server:
     build: 
       context: .
@@ -23,6 +24,7 @@ services:
     depends_on:
       - mockpad-redis
     command: sh /docker-server-entrypoint.sh
+    restart: always
   mockpad-executor:
     build:
       context: .
