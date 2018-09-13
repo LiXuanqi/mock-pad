@@ -4,7 +4,7 @@ let restClient = new node_rest_client();
 let bodyParser = require("body-parser");
 let jsonParser = bodyParser.json();
 
-const EXECUTOR_SERVER_URL = 'http://host.docker.internal:5000/build_and_run';
+const EXECUTOR_SERVER_URL = 'http://mockpad.lixuanqi.me/executor_apis/build_and_run';
 
 restClient.registerMethod('build_and_run', EXECUTOR_SERVER_URL, 'POST');
 
